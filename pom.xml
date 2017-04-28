@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
+    
+    <packaging>jar</packaging>
+    <groupId>org.webjars</groupId>
+    <artifactId>google-maps-canvas-layer</artifactId>
+    <version>20150622-13ce11d</version>
+    <name>google-maps-canvas-layer</name>
+    <description>WebJar for a &lt;canvas&gt; map layer for the Google Maps JavaScript API v3 for 2d and WebGL data visualization</description>
+    <url>http://webjars.org</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <upstream.url>https://github.com/brendankenny/CanvasLayer/archive/</upstream.url>
+        <upstream.repository>CanvasLayer</upstream.repository>
+        <upstream.commit>13ce11d0c610d6ce3eafff2f774db9ad29ecdad8</upstream.commit>
+        <destDir>${project.build.outputDirectory}/META-INF/resources/webjars/${project.artifactId}/${project.version}</destDir>
+        <requirejs>
+            {
+                "paths": {
+                    "google-maps-canvas-layer": "src/CanvasLayer"
+                }
+            }
+        </requirejs>
+    </properties>
+
+    <developers>
+        <developer>
+            <id>linnando</id>
+            <name>Ruslan Batdalov</name>
+            <email>linnando@gmail.com</email>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>http://github.com/webjars/google-maps-canvas-layer</url>
+        <connection>scm:git:https://github.com/webjars/google-maps-canvas-layer.git</connection>
+        <developerConnection>scm:git:https://github.com/webjars/google-maps-canvas-layer.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>wagon-maven-plugin</artifactId>
+                <version>1.0-beta-4</version>
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>download-single</goal>
+                        </goals>
+                        <configuration>
+                            <url>${upstream.url}</url>
+                            <fromFile>${upstream.commit}.zip</fromFile>
+                            <toFile>${project.build.directory}/${project.artifactId}.zip</toFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+                        <goals><goal>run</goal></goals>
+                        <configuration>
+                            <target>
+                                <echo message="unzip archive"/>
+                                <unzip src="${project.build.directory}/${project.artifactId}.zip" dest="${project.build.directory}"/>
+                                <echo message="moving resources"/>
+                                <move todir="${destDir}">
+                                    <fileset dir="${project.build.directory}/${upstream.repository}-${upstream.commit}"/>
+                                </move>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.8</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>sonatype-nexus-staging</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
