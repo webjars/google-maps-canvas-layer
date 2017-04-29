@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
     <groupId>org.webjars</groupId>
     <artifactId>google-maps-canvas-layer</artifactId>
-    <version>20150622-13ce11d</version>
+    <version>0-SNAPSHOT</version>
     <name>google-maps-canvas-layer</name>
     <description>WebJar for a &lt;canvas&gt; map layer for the Google Maps JavaScript API v3 for 2d and WebGL data visualization</description>
     <url>http://webjars.org</url>
@@ -51,7 +51,7 @@
         <url>http://github.com/webjars/google-maps-canvas-layer</url>
         <connection>scm:git:https://github.com/webjars/google-maps-canvas-layer.git</connection>
         <developerConnection>scm:git:https://github.com/webjars/google-maps-canvas-layer.git</developerConnection>
-        <tag>google-maps-canvas-layer-20150622-13ce11d</tag>
+        <tag>HEAD</tag>
     </scm>
     
     <build>
